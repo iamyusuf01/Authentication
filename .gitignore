@@ -2,5 +2,5 @@
 client/node_modules
 server/node_modules
 #Environments Variables
-client/.env
+client/.env 
 server/.env
