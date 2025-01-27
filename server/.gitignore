@@ -1,5 +1,4 @@
-# Logs
-/.env
+# Log
 /node_modules
 
 logs
