@@ -15,7 +15,7 @@ const app = express();
 const PORT = process.env.PORT || 4000
 connectDB();
 
-const allowedOrigins = ["https://authentication-2-3l3z.onrender.com/"]
+const allowedOrigins = ["http://localhost:5173"]
 
 app.use(express.json());
 app.use(cookieParser());
