@@ -12,7 +12,7 @@ import dotenv from 'dotenv';
         
         //validation 
         if(!name || !email || !password){
-            return res.status(400).json({ 
+            return res.json({ 
                 success: false,
                 message: 'All fields are required' });
         }
@@ -21,7 +21,7 @@ import dotenv from 'dotenv';
         const existingUser = await userModel.findOne({ email });
         //validation
         if(existingUser){
-            return res.status(400).json({ 
+            return res.json({ 
                 success: false,
                 message: 'Email already exists' });
         }
@@ -55,7 +55,7 @@ import dotenv from 'dotenv';
             await transporter.sendMail(mailOptions);
             
          //return response
-         return res.status(201).json({ 
+         return res.json({ 
              success: true,
              message: 'User registered successfully',
              
@@ -63,9 +63,10 @@ import dotenv from 'dotenv';
 
     } catch (error) {
         console.log(error);
-        return res.status(500).json({
+        return res.json({
             success: false,
-            message: 'Server Error' });
+            message: error.message
+        });
     }
 };
 
