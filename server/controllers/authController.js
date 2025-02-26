@@ -10,6 +10,7 @@ import dotenv from 'dotenv';
         //fetch data from request body
         const { name, email, password } = req.body;
         
+        
         //validation 
         if(!name || !email || !password){
             return res.json({ 
@@ -46,13 +47,21 @@ import dotenv from 'dotenv';
 
          //Send welcome Email to user
          const mailOptions = {
-             from: process.env.SENDER_EMAIL,
+             from: process.env.SMTP_USER,
              to: email,
              subject: 'Welcome to My Website',
              text: `Welcome to My Website. Your registration was successful. email id: ${email} Enjoy your stay!`
          }
 
             await transporter.sendMail(mailOptions);
+
+            transporter.sendMail(mailOptions, (error, info) => {
+                if (error) {
+                  console.error("Error sending email:", error);
+                } else {
+                  console.log("Email sent successfully:", info.response);
+                }
+              });
             
          //return response
          return res.json({ 
@@ -172,12 +181,20 @@ export const sendVerifyOtp = async (req, res) => {
 
          //Send email
          const mailOptions = {
-            from: process.env.SENDER_EMAIL,
+            from: process.env.SMTP_USER,
             to: user.email,
             subject: 'Account verification otp',
             text: `Your OTP is ${otp}. Verify your account using OTP.`
         }
         await transporter.sendMail(mailOptions);
+
+        transporter.sendMail(mailOptions, (error, info) => {
+            if (error) {
+              console.error("Error sending email:", error);
+            } else {
+              console.log("Email sent successfully:", info.response);
+            }
+          });
 
         return res.status(200).json({
              success: true,
@@ -293,7 +310,7 @@ export const sendResetOtp = async (req, res) => {
 
          //Send email
           const mailOptions = {
-            from: process.env.SENDER_EMAIL,
+            from: process.env.SMTP_USER,
             to: user.email,
             subject: 'Password Reset OTP',
             text: `Your OTP for reseting your password is ${otp}.
