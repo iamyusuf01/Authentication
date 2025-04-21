@@ -3,4 +3,8 @@ client/node_modules
 server/node_modules
 #Environments Variables
 client/.env 
-server/.env
+server/.env 
+
+#Build Files
+client/build
+
